@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Shooting : MonoBehaviour
+public class ShooterBad : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] float _firerate;
