@@ -12,22 +12,25 @@ public class Follower : MonoBehaviour
 
     private float _closeDistance = 0.01f;
 
-    private void Start()
+    private void Awake()
     {
         InitWaypoints();
+    }
 
+    private void Start()
+    {
         ToFirstPoint();
     }
 
     private void Update()
     {
-        Transform _waypoint = _waypoints[_waypointIndex];
+        Transform waypoint = _waypoints[_waypointIndex];
 
-        transform.position = Vector3.MoveTowards(transform.position, _waypoint.position, _speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, waypoint.position, _speed * Time.deltaTime);
 
-        Vector3 distanceToWaypoint = _waypoint.position - transform.position;
+        Vector3 distanceToWaypoint = waypoint.position - transform.position;
 
-        if (distanceToWaypoint.sqrMagnitude < _closeDistance)
+        if (distanceToWaypoint.sqrMagnitude < (_closeDistance * _closeDistance))
             SetNextPosition();
     }
 

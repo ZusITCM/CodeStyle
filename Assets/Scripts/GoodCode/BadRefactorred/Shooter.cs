@@ -4,7 +4,7 @@ using UnityEngine;
 public class Shooter : MonoBehaviour
 {
     [SerializeField] private float _speed;
-    [SerializeField] float _fireRate;
+    [SerializeField] private float _fireRate;
 
     [SerializeField] private Bullet _prefab;
 
@@ -12,24 +12,16 @@ public class Shooter : MonoBehaviour
 
     private readonly bool _isShooting = true;
 
-    private WaitForSecondsRealtime _fireDelay;
+    private WaitForSeconds _fireDelay;
 
-    private Coroutine _coroutine;
+    private void Awake()
+    {
+        _fireDelay = new WaitForSeconds(_fireRate);
+    }
 
     private void OnEnable()
     {
-        _coroutine = StartCoroutine(nameof(Shoot));
-    }
-
-    private void OnDisable()
-    {
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
-    }
-
-    private void Start()
-    {
-        _fireDelay = new WaitForSecondsRealtime(_fireRate);
+        StartCoroutine(nameof(Shoot));
     }
 
     private IEnumerator Shoot()
@@ -49,8 +41,8 @@ public class Shooter : MonoBehaviour
 
         Vector3 shootDirection = (_target.transform.position - transform.position).normalized;
 
-        Bullet NewBullet = Instantiate(_prefab, transform.position + shootDirection, Quaternion.identity);
+        Bullet newBullet = Instantiate(_prefab, transform.position + shootDirection, Quaternion.identity);
 
-        NewBullet.Init(shootDirection, _speed);
+        newBullet.Init(shootDirection, _speed);
     }
 }
